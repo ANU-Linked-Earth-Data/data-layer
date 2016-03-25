@@ -1,8 +1,6 @@
 #PBS -q copyq 
-#PBS -l walltime=03:00:00,mem=32GB,ncpus=1
+#PBS -l walltime=00:30:00,mem=32GB,ncpus=1
 #PBS -l wd
-module unload openmpi
-module load openmpi/1.10.2 python/2.7.3
 mpirun python read_data.py
 cat $PBS_NODEFILE
 
