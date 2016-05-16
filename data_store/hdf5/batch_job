@@ -1,0 +1,8 @@
+#PBS -q normal 
+#PBS -l walltime=00:01:00,mem=32GB,ncpus=1
+#PBS -l wd
+module load hdf5
+module load python3/3.4.3
+mpirun python3 create_dggs_tree.py
+cat $PBS_NODEFILE
+
