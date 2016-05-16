@@ -1,6 +1,0 @@
-#PBS -q copyq 
-#PBS -l walltime=00:30:00,mem=32GB,ncpus=1
-#PBS -l wd
-mpirun python read_data.py
-cat $PBS_NODEFILE
-
