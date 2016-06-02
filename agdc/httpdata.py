@@ -41,7 +41,7 @@ def landsat():
 def fractional_cover():
     base_path = "http://dapds00.nci.org.au/thredds/fileServer/rs0/scenes/FC25_V0.0"
     base_name = "LS8_OLI_TIRS_FC_P54_GAFC01-032"
-    type = "PV"
+    fraction = "PV"
     """
        PV: Green Cover Fraction. Fraction of green cover including green groundcover and green leaf material over all strata, within the Landsat pixel. Expressed as 100% = 10000.
        NPV: Non-green cover fraction. Fraction of non green cover including litter, dead leaf and branches over all strata, within the Landsat pixel. Expressed as 100% = 10000.
@@ -60,7 +60,7 @@ def fractional_cover():
     ]
 
     def get_file(month, scene, date):
-        name = base_name + '_' + scene + '_' + date + '_' + type + '.tif'
+        name = base_name + '_' + scene + '_' + date + '_' + fraction + '.tif'
         url = base_path + '/' + month + '/' + base_name + '_' + scene + '_' + date + '/' + 'scene01' + '/' + name
         print("Retrieving " + name + " ...", end="", flush=True)
         print(url)
