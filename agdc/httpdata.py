@@ -63,7 +63,6 @@ def fractional_cover():
         name = base_name + '_' + scene + '_' + date + '_' + fraction + '.tif'
         url = base_path + '/' + month + '/' + base_name + '_' + scene + '_' + date + '/' + 'scene01' + '/' + name
         print("Retrieving " + name + " ...", end="", flush=True)
-        print(url)
 
         with urllib.request.urlopen(url) as response, open(name, 'wb') as file:
             shutil.copyfileobj(response, file)
@@ -75,15 +74,47 @@ def fractional_cover():
         print(str(i) + "/" + str(len(month_scene_date)) + " ", end="", flush=True)
         get_file(month, scene, date)
 
+def modis():
+    base_path = "http://dapds00.nci.org.au/thredds/fileServer/u39/public/data/modis/lpdaac-mosaics-cmar/v1-hdf4/aust/MOD09GA.005"
+    base_name1 = "MOD09GA"
+    base_name2 = "aust.005.b14.500m_0545_0565nm_refl.hdf.gz"
+
+    date_number = [
+     ("2013.05.27", "2013.147"),
+     ("2014.01.22", "2014.022"),
+     ("2014.05.30", "2014.150"),
+     ("2015.01.25", "2015.025"),
+     ("2015.06.02", "2015.153"),
+     ("2016.01.12", "2016.012")
+    ]
+
+    def get_file(date, number):
+        name = base_name1 + '.' + number + '.' + base_name2
+        url = base_path + '/' + date + '/' + name
+        print("Retrieving " + name + " ...", end="", flush=True)
+
+        with urllib.request.urlopen(url) as response, open(name, 'wb') as file:
+            shutil.copyfileobj(response, file)
+
+        print(" Done")
+
+    for i, t in enumerate(date_number):
+        date, number = t
+        print(str(i) + "/" + str(len(date_number)) + " ", end="", flush=True)
+        get_file(date, number)
+
 if __name__ == '__main__':
-    if len(sys.argv) == 2 and sys.argv[1] in ("landsat", "fraccover"):
+    if len(sys.argv) == 2 and sys.argv[1] in ("landsat", "fraccover", "modis"):
         if sys.argv[1] == "landsat":
             landsat()
-        else:
+        elif sys.argv[1] == "fraccover":
             fractional_cover()
+        else:
+            modis()
     else:
         print("-------------------------------------------------------------")
         print("Usage:")
         print("httpdata.py landsat")
         print("httpdata.py fraccover")
+        print("httpdata.py modis")
         print("-------------------------------------------------------------")
